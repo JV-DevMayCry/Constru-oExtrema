@@ -8,10 +8,12 @@ public class PiecesGenerator : MonoBehaviour
 
     private GameObject lastGeneratedPiece ;
     private BuildingHight buildingHight;
+    private Transform mainCamera;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        mainCamera = Camera.main.transform;
         buildingHight = GetComponent<BuildingHight>();
         pieceSpawn();
         
@@ -23,9 +25,11 @@ public class PiecesGenerator : MonoBehaviour
     {
           if ( lastGeneratedPiece == null) return;
 
-        Vector2 playerInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        lastGeneratedPiece.transform.position += new Vector3(playerInput.x, 0, playerInput.y) * Time.deltaTime * 3;
-
+        Vector3 playerInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 cameraDirection = mainCamera.TransformDirection(playerInput);
+        cameraDirection.y = 0;
+        
+        lastGeneratedPiece.transform.position += cameraDirection.normalized * Time.deltaTime * 3;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             PieceRelease();
