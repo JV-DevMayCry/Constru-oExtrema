@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PiecesGenerator : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class PiecesGenerator : MonoBehaviour
     private GameObject lastGeneratedPiece ;
     private BuildingHight buildingHight;
     private Transform mainCamera;
+
+    [SerializeField] private UnityEvent OnNewPiece ;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,11 +31,11 @@ public class PiecesGenerator : MonoBehaviour
         Vector3 playerInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         Vector3 cameraDirection = mainCamera.TransformDirection(playerInput);
         cameraDirection.y = 0;
-        
+
         lastGeneratedPiece.transform.position += cameraDirection.normalized * Time.deltaTime * 3;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            PieceRelease();
+            NewPiece();
             Invoke(nameof(pieceSpawn), 3f);
         }
     }
@@ -50,10 +53,12 @@ public class PiecesGenerator : MonoBehaviour
     }
     
     
-    private void PieceRelease()
+    private void NewPiece()
     {
         lastGeneratedPiece.GetComponent<Rigidbody>().useGravity = true;
         lastGeneratedPiece = null;
+
+        OnNewPiece.Invoke();
     }
 
     
