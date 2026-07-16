@@ -56,6 +56,7 @@ public class PiecesGenerator : MonoBehaviour
     private void NewPiece()
     {
         lastGeneratedPiece.GetComponent<Rigidbody>().useGravity = true;
+        lastGeneratedPiece.transform.GetChild(0).gameObject.SetActive(false);
         lastGeneratedPiece = null;
 
         OnNewPiece.Invoke();
