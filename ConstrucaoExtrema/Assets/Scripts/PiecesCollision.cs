@@ -1,19 +1,18 @@
 using UnityEngine;
 
-public class Collision : MonoBehaviour
+public class PiecesCollision : MonoBehaviour
 {
-   
-   [SerializeField] private AudioSource collisionAudioSource;
+    [SerializeField] private AudioSource collisionAudioSource;
     private bool firstCollision;
 
-    private void OlisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         collisionAudioSource.PlayOneShot(collisionAudioSource.clip);
 
         if (!firstCollision)
         {
             firstCollision = true;
-            Invoke(nameof(DisableComponent), 5);
+            Invoke(nameof(DisableComponent), 1);
 
         }
 
