@@ -1,0 +1,141 @@
+{
+    "version": 1,
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "PlayerActions",
+            "id": "a0e237a7-d8c3-4bee-8d01-24ae497c3846",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "c4ed2df2-365a-42b0-9434-a9cc713cde0e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "CameraMove",
+                    "type": "Value",
+                    "id": "5be72795-b4b0-498d-8e52-ccc15be03406",
+                    "expectedControlType": "Vector2",
+                    "processors": "DeltaTime",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "CubeDrop",
+                    "type": "Button",
+                    "id": "7b780b69-32ba-442a-ac7c-86ed2f7c0d92",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "22381362-66d6-4758-b0c4-99f905cf42ab",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Keyboard WASD",
+                    "id": "9738b99f-c6f1-451e-b523-da0a0ce3ac71",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "0b5d75d4-6c46-4df3-9886-dd0cb08cddd0",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "6b17c945-ff9d-4ca2-bf27-36cea3971f60",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "f3b7eb93-e63b-4223-9715-96eba2406d2d",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "88bffd3e-a4f4-4ede-9462-65ae301ca373",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "0bf13459-3f9f-4cd1-bcb8-2a20191d3d2f",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "235cf839-4080-45ea-96cb-3fa5a648e4ab",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CubeDrop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6fbb46be-7b45-49a7-beff-59358958b8f6",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CubeDrop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

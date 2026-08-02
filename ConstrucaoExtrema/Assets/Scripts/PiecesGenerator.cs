@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class PiecesGenerator : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PiecesGenerator : MonoBehaviour
     private Transform mainCamera;
 
     [SerializeField] private UnityEvent OnNewPiece ;
+
+    private Vector3 playerInput;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,16 +31,13 @@ public class PiecesGenerator : MonoBehaviour
     {
           if ( lastGeneratedPiece == null) return;
 
-        Vector3 playerInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        //Vector3 playerInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
         Vector3 cameraDirection = mainCamera.TransformDirection(playerInput);
         cameraDirection.y = 0;
 
         lastGeneratedPiece.transform.position += cameraDirection.normalized * Time.deltaTime * 3;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            NewPiece();
-            Invoke(nameof(pieceSpawn), 3f);
-        }
+        
     }
 
     public void pieceSpawn()
@@ -60,7 +60,26 @@ public class PiecesGenerator : MonoBehaviour
         lastGeneratedPiece = null;
 
         OnNewPiece.Invoke();
-    }
 
     
+        Invoke(nameof(pieceSpawn), 3f);
+        
+    }
+
+    public void PieceMovement(InputAction.CallbackContext value)
+    {
+        
+        Vector2 input = value.ReadValue<Vector2>();
+        playerInput = new Vector3(input.x, 0, input.y);
+        
+    }
+    
+    public void PieceDrop(InputAction.CallbackContext value)
+    {
+        if (value.started)
+        {
+            NewPiece();
+        }
+        
+    }
 }
