@@ -9,19 +9,8 @@ public class CloudServices : MonoBehaviour
 
     [SerializeField] private GameObject loginErrorPopup;
 
-    private async void Awake()
-    {
-        try
-        {
-            await UnityServices.InitializeAsync();
-            await SignUpAnonymouslyAsync();
-        }
-        catch (Exception e)
-        {
-            Debug.LogException(e);
-        }
-    }
-    async Task SignUpAnonymouslyAsync()
+    
+    public async Task SignUpAnonymouslyAsync()
     {
 
     if(AuthenticationService.Instance.IsSignedIn) return;
@@ -29,6 +18,13 @@ public class CloudServices : MonoBehaviour
     try
     {
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        if(AuthenticationService.Instance.PlayerName == "" || AuthenticationService.Instance.PlayerName == null)
+            {
+                await UsernameUpdate("Player");
+                Debug.Log(AuthenticationService.Instance.PlayerName);
+            }
+
         Debug.Log("Sign in anonymously succeeded!");
 
         // Shows how to get the playerID
@@ -46,6 +42,16 @@ public class CloudServices : MonoBehaviour
     {
         loginErrorPopup.SetActive(false);
         SignUpAnonymouslyAsync();
+    }
+
+    public async Task UsernameUpdate(String userName)
+    {
+        await AuthenticationService.Instance.UpdatePlayerNameAsync(userName);
+    }
+
+    public String GetUserName()
+    {
+        return AuthenticationService.Instance.PlayerName;
     }
 }
 
