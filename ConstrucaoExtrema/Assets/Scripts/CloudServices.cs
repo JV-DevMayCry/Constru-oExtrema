@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
+using Unity.Services.Leaderboards;
+using Unity.Services.Leaderboards.Models;
 using UnityEngine;
 
 public class CloudServices : MonoBehaviour
@@ -53,6 +56,38 @@ public class CloudServices : MonoBehaviour
     {
         return AuthenticationService.Instance.PlayerName;
     }
+
+    public async Task ScoreSave(int score)
+    {
+        await LeaderboardsService.Instance.AddPlayerScoreAsync("Highest_Score_LB", 0);
+    }
+
+    public async Task<List<PlayerRanking>> GetScore()
+    {
+       var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync("Highest_Score_LB");
+
+        List<PlayerRanking> playersRankings = new List<PlayerRanking>();
+
+        foreach(LeaderboardEntry entry in scoresResponse.Results)
+        {
+            PlayerRanking player = new PlayerRanking();
+            player.position = entry.Rank;
+            player.userName = entry.PlayerName;
+            player.score = (int)entry.Score;
+
+            playersRankings.Add(player);
+        }
+
+        return playersRankings;
+    }
+
+    public async Task<int> GetPlayerScore()
+    {
+        var result = await LeaderboardsService.Instance.GetPlayerScoreAsync("scores");
+        return (int) result.Score;
+    }
 }
+
+
 
 
