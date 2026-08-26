@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
-using Unity.Services.Core;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Models;
 using UnityEngine;
@@ -47,9 +46,9 @@ public class CloudServices : MonoBehaviour
         SignUpAnonymouslyAsync();
     }
 
-    public async Task UsernameUpdate(String userName)
+    public async Task UsernameUpdate(String username)
     {
-        await AuthenticationService.Instance.UpdatePlayerNameAsync(userName);
+        await AuthenticationService.Instance.UpdatePlayerNameAsync(username);
     }
 
     public String GetUserName()
@@ -59,12 +58,12 @@ public class CloudServices : MonoBehaviour
 
     public async Task ScoreSave(int score)
     {
-        await LeaderboardsService.Instance.AddPlayerScoreAsync("Highest_Score_LB", 0);
+        await LeaderboardsService.Instance.AddPlayerScoreAsync("Highest_Scores_LB", score);
     }
 
     public async Task<List<PlayerRanking>> GetScore()
     {
-       var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync("Highest_Score_LB");
+       var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync("Highest_Scores_LB");
 
         List<PlayerRanking> playersRankings = new List<PlayerRanking>();
 
@@ -72,7 +71,7 @@ public class CloudServices : MonoBehaviour
         {
             PlayerRanking player = new PlayerRanking();
             player.position = entry.Rank;
-            player.userName = entry.PlayerName;
+            player.username = entry.PlayerName;
             player.score = (int)entry.Score;
 
             playersRankings.Add(player);
@@ -83,8 +82,15 @@ public class CloudServices : MonoBehaviour
 
     public async Task<int> GetPlayerScore()
     {
-        var result = await LeaderboardsService.Instance.GetPlayerScoreAsync("scores");
+        try
+        {
+        var result = await LeaderboardsService.Instance.GetPlayerScoreAsync("Highest_Scores_LB");
         return (int) result.Score;
+        }
+        catch
+        {
+            return 0;
+        }
     }
 }
 

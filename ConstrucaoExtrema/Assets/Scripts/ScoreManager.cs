@@ -1,11 +1,12 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
+
 
 public class ScoreManager : MonoBehaviour
 {
    [SerializeField] private TMP_Text scoreText;
    [SerializeField] private TMP_Text gameOverScoreText;
+   [SerializeField] private CloudServices cloudServices;
    private int score;
 
    public void AddScore()
@@ -13,5 +14,10 @@ public class ScoreManager : MonoBehaviour
         score++;
         scoreText.text = score.ToString();
         gameOverScoreText.text = "Score" + score;
+    }
+
+    public async void ScoreRegistry()
+    {
+        await cloudServices.ScoreSave(score);
     }
 }

@@ -1,7 +1,6 @@
 using UnityEngine;
 using Unity.Services.Core;
 using System;
-using Unity.VisualScripting;
 using TMPro;
 
 public class LoginManager : MonoBehaviour
@@ -9,9 +8,11 @@ public class LoginManager : MonoBehaviour
 
     [SerializeField] private CloudServices cloudServices;
     [SerializeField] private TMP_Text usernameText;
+    [SerializeField] private TMP_InputField usernameInputField;
+    [SerializeField] private TMP_Text recordTxt;
 
 
-    private async void Awake()
+    private async void Start()
     {
         try
         {
@@ -19,6 +20,7 @@ public class LoginManager : MonoBehaviour
             await cloudServices.SignUpAnonymouslyAsync();
 
             usernameUiUpdate();
+            RecordUiUpdate();
         }
         catch (Exception e)
         {
@@ -28,6 +30,20 @@ public class LoginManager : MonoBehaviour
 
     private void usernameUiUpdate()
     {
-        usernameText.text = cloudServices.GetUserName();
+        string username = cloudServices.GetUserName();
+        usernameText.text = username;
+        usernameInputField.text = username.Substring(0, username.IndexOf("#"));
+    }
+
+    public async void SaveNewUsername()
+    {
+        await cloudServices.UsernameUpdate(usernameInputField.text);
+        usernameUiUpdate();
+    }
+
+    public async void RecordUiUpdate()
+    {
+        int record = await cloudServices.GetPlayerScore();
+        recordTxt.text = "Meu Recorde: " + record;
     }
 }
