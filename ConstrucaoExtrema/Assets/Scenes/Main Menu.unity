@@ -3636,6 +3636,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 351445a51a0971142a0a447b04cfc8c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InterstitialAds
+  appKey: 27cbb8f75
+  interstitialAdUnitId: dtuw1bxgiuky39xo
 --- !u!1 &1623061416
 GameObject:
   m_ObjectHideFlags: 0
